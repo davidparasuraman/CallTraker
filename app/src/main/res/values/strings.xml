@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Suresh Devraj Farm</string>
+    <string name="app_loader">Welcome</string>
+    <string name="title_activity_main">My Call Tracker</string>
+    <string name="title_all_call">All</string>
+    <string name="title_missed_call">Missed Calls</string>
+    <string name="title_received_call">Received Calls</string>
+    <string name="title_activity_home">Suresh Devraj Farm</string>
+    <string name="title_activity_sms">SMS Settings</string>
+</resources>
