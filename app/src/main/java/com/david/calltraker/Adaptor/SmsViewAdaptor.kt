@@ -48,7 +48,7 @@ class SmsViewAdaptor(val userList: List<SmsEntity>, val context: Context, val st
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bindItems(user: SmsEntity,context: Context,studentDatabase: CallHistoryAppDB?) {
-            itemView.message.text=user.message
+            itemView.message.text=user.title
             if(user.status.equals("1")){
                 itemView.msgSelection.isChecked=true;
             }

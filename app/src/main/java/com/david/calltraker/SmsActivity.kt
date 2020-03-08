@@ -81,12 +81,14 @@ class SmsActivity : AppCompatActivity() {
         // Seems ok to inflate view with null rootView
         val view = layoutInflater.inflate(R.layout.add_sms_view, null)
 
+        val titleEditText = view.findViewById(R.id.titleEditText) as EditText
         val categoryEditText = view.findViewById(R.id.categoryEditText) as EditText
 
         builder.setView(view);
 
         // set up the ok button
         builder.setPositiveButton(android.R.string.ok) { dialog, p1 ->
+            val newtitle = titleEditText.text
             val newCategory = categoryEditText.text
             var isValid = true
             if (newCategory.isBlank()) {
@@ -103,12 +105,19 @@ class SmsActivity : AppCompatActivity() {
 
                 var callHistory = SmsEntity(
                     id = null,
+                    title = newtitle.toString(),
                     message = newCategory.toString(),
                     status = "0"
                 );
                 AsyncTask.execute {
 
-                    studentDatabase!!.SmsEntityDao().insertAll(callHistory)
+                    try {
+                        studentDatabase!!.SmsEntityDao().insertAll(callHistory)
+                    }
+                    catch (e:Exception)
+                    {
+                        var ss=e.message
+                    }
 
                 }
                 studentDatabase = CallHistoryAppDB.getInstance(this)

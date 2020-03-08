@@ -15,6 +15,7 @@ data class SmsEntity(
     @ColumnInfo(name = "id")
     @PrimaryKey(autoGenerate = true)
     var id: Long? =null,
+    @ColumnInfo(name = "title") var title: String,
     @ColumnInfo(name = "message") var message: String,
     @ColumnInfo(name = "status") var status: String): Parcelable
 

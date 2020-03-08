@@ -23,6 +23,12 @@ import android.net.Uri.withAppendedPath
 import android.app.Activity
 import android.net.Uri
 import android.telephony.SmsManager
+import androidx.core.app.NotificationCompat.getExtras
+import android.os.Bundle
+import android.telephony.PhoneStateListener
+import android.system.Os.listen
+import java.lang.reflect.AccessibleObject.setAccessible
+import java.lang.reflect.InvocationTargetException
 
 
 class CallReceiver : BroadcastReceiver() {
@@ -47,8 +53,6 @@ class CallReceiver : BroadcastReceiver() {
             } else if (stateStr == TelephonyManager.EXTRA_STATE_RINGING) {
                 state = TelephonyManager.CALL_STATE_RINGING
             }
-
-
             onCallStateChanged(context, state, number.toString())
         }
     }
@@ -176,7 +180,9 @@ class CallReceiver : BroadcastReceiver() {
             {
                 val smsManager = SmsManager.getDefault() as SmsManager
                 for (i in smsList.indices){
-                    smsManager.sendTextMessage(number, null, smsList.get(i).message, null, null)
+                    val smsManager = SmsManager.getDefault()
+                    val parts = smsManager.divideMessage(smsList.get(i).message)
+                    smsManager.sendMultipartTextMessage(number, null, parts, null, null)
                 }
             }
 

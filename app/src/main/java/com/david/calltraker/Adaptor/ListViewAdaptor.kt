@@ -24,6 +24,10 @@ import android.content.DialogInterface
 import android.app.AlertDialog
 import android.telephony.SmsManager
 import com.david.calltraker.Entity.SmsEntity
+import android.R.attr.phoneNumber
+import android.R.id.message
+
+
 
 
 class ListViewAdaptor(val userList: List<CallHistoryEntity>,val smsList:List<SmsEntity>,val context: Context,val studentDatabase:CallHistoryAppDB?) : RecyclerView.Adapter<ListViewAdaptor.ViewHolder>() {
@@ -97,9 +101,9 @@ class ListViewAdaptor(val userList: List<CallHistoryEntity>,val smsList:List<Sms
                 for (i in smsList.indices){
 
                     if(list.equals(""))
-                        list=smsList.get(i).message
+                        list=smsList.get(i).title
                     else
-                        list=list+","+smsList.get(i).message
+                        list=list+","+smsList.get(i).title
                 }
                 val builder = AlertDialog.Builder(context)
                 builder.setTitle("SMS")
@@ -119,7 +123,9 @@ class ListViewAdaptor(val userList: List<CallHistoryEntity>,val smsList:List<Sms
                         dialog, which ->
                     val smsManager = SmsManager.getDefault() as SmsManager
                     for (i in smsList.indices){
-                        smsManager.sendTextMessage(it.getTag().toString(), null, selectedSms.get(i).toString(), null, null)
+                        val smsManager = SmsManager.getDefault()
+                        val parts = smsManager.divideMessage(selectedSms.get(i).toString())
+                        smsManager.sendMultipartTextMessage(it.getTag().toString(), null, parts, null, null)
                     }
 
                     dialog.dismiss()
